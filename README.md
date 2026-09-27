@@ -8,6 +8,8 @@ automatically transcodes camera clips into lightweight editing proxies.
 ![theme](https://img.shields.io/badge/theme-dark-222?style=flat-square)
 ![platform](https://img.shields.io/badge/platform-Linux-blue?style=flat-square)
 
+![demo](assets/demo.gif)
+
 ## How it works
 
 Rather than reimplementing camera RAW decoders from scratch, this tool drives

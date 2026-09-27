@@ -76,7 +76,7 @@ class App:
                   font=("Inter", 9), bootstyle="inverse-dark").pack(anchor="w")
 
         self.status_badge = tb.Label(header, text="●  In ascolto", font=("Inter", 10, "bold"),
-                                      bootstyle="success-inverse-dark", padding=(10, 4))
+                                      bootstyle="success-inverse", padding=(10, 4))
         self.status_badge.pack(side="right")
 
         body = tb.Frame(self.root, padding=14)
@@ -207,12 +207,12 @@ class App:
             self.engine.stop()
             self.watching = False
             self.watch_toggle_btn.configure(text="▶  Riprendi", bootstyle="success")
-            self.status_badge.configure(text="●  In pausa", bootstyle="warning-inverse-dark")
+            self.status_badge.configure(text="●  In pausa", bootstyle="warning-inverse")
         else:
             self.engine.start()
             self.watching = True
             self.watch_toggle_btn.configure(text="⏸  Metti in pausa", bootstyle="warning")
-            self.status_badge.configure(text="●  In ascolto", bootstyle="success-inverse-dark")
+            self.status_badge.configure(text="●  In ascolto", bootstyle="success-inverse")
 
     def _on_row_double_click(self, _evt):
         sel = self.tree.selection()
