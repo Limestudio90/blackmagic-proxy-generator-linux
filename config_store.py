@@ -3,6 +3,9 @@ import os
 
 CONFIG_DIR = os.path.expanduser("~/.config/blackmagic-proxy-generator")
 CONFIG_PATH = os.path.join(CONFIG_DIR, "config.json")
+AUTOSTART_DESKTOP_PATH = os.path.expanduser(
+    "~/.config/autostart/blackmagic-proxy-generator.desktop"
+)
 
 DEFAULT_CONFIG = {
     "watch_folders": [],       # [{"path": "...", "output": ""}]  output "" = mirror as <path>/Proxy
@@ -34,3 +37,22 @@ def save(cfg):
     os.makedirs(CONFIG_DIR, exist_ok=True)
     with open(CONFIG_PATH, "w") as f:
         json.dump(cfg, f, indent=2)
+
+
+def is_autostart_enabled():
+    if not os.path.exists(AUTOSTART_DESKTOP_PATH):
+        return False
+    with open(AUTOSTART_DESKTOP_PATH) as f:
+        lines = f.readlines()
+    return not any(line.strip() == "Hidden=true" for line in lines)
+
+
+def set_autostart_enabled(enabled):
+    if not os.path.exists(AUTOSTART_DESKTOP_PATH):
+        return
+    with open(AUTOSTART_DESKTOP_PATH) as f:
+        lines = [l for l in f.readlines() if not l.strip().startswith("Hidden=")]
+    if not enabled:
+        lines.append("Hidden=true\n")
+    with open(AUTOSTART_DESKTOP_PATH, "w") as f:
+        f.writelines(lines)

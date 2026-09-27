@@ -127,6 +127,11 @@ class App:
         res_combo.pack(fill="x", pady=(2, 0))
         res_combo.bind("<<ComboboxSelected>>", self._on_settings_change)
 
+        self.autostart_var = tk.BooleanVar(value=config_store.is_autostart_enabled())
+        tb.Checkbutton(settings_card, text="Avvia all'accensione", variable=self.autostart_var,
+                        bootstyle="round-toggle", command=self._on_autostart_toggle).pack(
+            anchor="w", pady=(10, 0))
+
         self.watch_toggle_btn = tb.Button(sidebar, text="⏸  Metti in pausa", bootstyle="warning",
                                             command=self._toggle_watching)
         self.watch_toggle_btn.pack(fill="x")
@@ -200,6 +205,12 @@ class App:
         res_key = next(k for k, v in RESOLUTION_LABELS.items() if v == self.res_var.get())
         self.cfg["codec"] = codec_key
         self.cfg["resolution"] = res_key
+        config_store.save(self.cfg)
+
+    def _on_autostart_toggle(self):
+        enabled = self.autostart_var.get()
+        config_store.set_autostart_enabled(enabled)
+        self.cfg["autostart"] = enabled
         config_store.save(self.cfg)
 
     def _toggle_watching(self):
